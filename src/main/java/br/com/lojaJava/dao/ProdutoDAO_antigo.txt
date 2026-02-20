@@ -1,0 +1,107 @@
+package br.com.lojaJava.dao;
+
+import br.com.lojaJava.connection.ConnectionFactory;
+import br.com.lojaJava.model.Produto;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+//CRUD
+public class ProdutoDAO {
+    //CREAT
+    public void save(Produto produto){
+
+        String sql = "INSERT INTO produtos (nome, descricao, preco, quantidade) VALUES (?, ?, ?, ?)";
+        try (Connection conn = ConnectionFactory.getConnection();
+        PreparedStatement pstmt = conn.prepareCall(sql)) {
+            pstmt.setString(1, produto.getNome());
+            pstmt.setString(2, produto.getDescricao());
+            pstmt.setBigDecimal(3, produto.getPreco());
+            pstmt.setInt(4, produto.getQuantidade());
+
+            pstmt.executeUpdate();
+            System.out.println("Produto adicionado com sucesso");
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao salvar", e);
+        }
+
+    }
+    //READ
+    public List<Produto> getProdutos() throws SQLException {
+        String sql = "SELECT * FROM produtos";
+        List<Produto> produtos = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()){
+
+            while(rs.next()){
+                Produto produto = new Produto();
+                produto.setId(rs.getInt("id"));
+                produto.setNome(rs.getString("nome"));
+                produto.setDescricao(rs.getString("descricao"));
+                produto.setPreco(rs.getBigDecimal("preco"));
+                produto.setQuantidade(rs.getInt("quantidade"));
+                produtos.add(produto);
+            }
+        } catch (SQLException e){
+            throw new RuntimeException("Erro ao obter produtos", e);
+        }
+        return produtos;
+    }
+
+    //UPDATE
+    public void updateProduto(Produto produto) { // Recebe o objeto completo
+        String sql = "UPDATE produtos SET nome = ?, descricao = ?, preco = ?, quantidade = ? WHERE id = ?";
+        try (Connection cnn = ConnectionFactory.getConnection();
+             PreparedStatement pstmt = cnn.prepareStatement(sql)) { // use prepareStatement, não prepareCall
+
+            // Define os parâmetros
+            pstmt.setString(1, produto.getNome());
+            pstmt.setString(2, produto.getDescricao());
+            pstmt.setBigDecimal(3, produto.getPreco());
+            pstmt.setInt(4, produto.getQuantidade());
+            pstmt.setInt(5, produto.getId()); // O ID é o último parâmetro, no WHERE
+
+            pstmt.executeUpdate();
+            System.out.println("Produto atualizado com sucesso");
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar produto", e);
+        }
+    }
+
+    //DELETE
+    public void deleteProduto(int id){
+        String sql = "DELETE FROM produtos WHERE id = ?";
+        try (Connection cnn = ConnectionFactory.getConnection();
+            PreparedStatement  pstmt = cnn.prepareStatement(sql)){
+
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+            System.out.println("Produto removido com sucesso");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Método auxiliar para testes
+    public void deleteAllProdutos() {
+        String sql = "DELETE FROM produtos";
+        // Para reiniciar a contagem do auto-incremento (opcional, depende do banco)
+        // String sqlResetAutoIncrement = "ALTER TABLE produtos AUTO_INCREMENT = 1;";
+
+        try (Connection cnn = ConnectionFactory.getConnection();
+             PreparedStatement pstmt = cnn.prepareStatement(sql)) {
+            pstmt.executeUpdate();
+            // Se quiser resetar o ID: cnn.createStatement().execute(sqlResetAutoIncrement);
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao limpar a tabela de produtos", e);
+        }
+    }
+}

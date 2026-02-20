@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulário de Produto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="#" th:href="@{/produtos}">Loja Java Geek</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 th:text="${produto.id == 0} ? 'Novo Produto' : 'Editar Produto'"></h4>
+        </div>
+
+        <div class="card-body">
+            <!--/*@thymesVar id="mensagemErro" type=""*/-->
+            <div th:if="${mensagemErro}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Ops!</strong> <span th:text="${mensagemErro}">Mensagem de erro aqui</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <form th:object="${produto}" th:action="@{/produtos/salvar}" method="POST" class="row g-3">
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="col-md-6">
+                    <label class="form-label">Nome</label>
+                    <input type="text" th:field="*{nome}" class="form-control" placeholder="Digite o nome do produto" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Descrição</label>
+                    <input type="text" th:field="*{descricao}" class="form-control" placeholder="Breve descrição">
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Preço</label>
+                    <input type="number" step="0.01" th:field="*{preco}" class="form-control" placeholder="0.00" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Quantidade</label>
+                    <input type="number" th:field="*{quantidade}" class="form-control" placeholder="0" required>
+                </div>
+
+                <div class="col-12 mt-3">
+                    <button type="submit" class="btn btn-success">💾 Salvar</button>
+                    <a th:href="@{/produtos}" class="btn btn-secondary">↩ Voltar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
