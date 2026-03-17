@@ -1,0 +1,26 @@
+name: CI Java Maven
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Instalar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Build e testes
+        run: mvn clean test -DskipTests #Teste do banco irão falhar caso não haja conexao com o banco.-DskipTests irá pular esses testes.
