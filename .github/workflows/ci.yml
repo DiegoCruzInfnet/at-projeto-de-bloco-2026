@@ -19,8 +19,8 @@ jobs:
       - name: Instalar Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '21'
+          distribution: temurin
+          java-version: 21
 
-      - name: Build e testes
-        run: mvn clean test -DskipTests #Teste do banco irão falhar caso não haja conexao com o banco.-DskipTests irá pular esses testes.
+      - name: Build
+        run: mvn clean package -DskipTests
