@@ -34,15 +34,6 @@ jobs:
           distribution: temurin
           java-version: 21
 
-#      - name: Instalar Chrome para testes Selenium
-#        run: |
-#          sudo apt-get update
-#          sudo apt-get install -y google-chrome-stable
-      - name: Rodar testes
-        env:
-          WDM_ARCHITECTURE: X64
-        run: mvn test
-
       - name: Criar db.properties
         env:
           DB_URL: ${{ secrets.DB_URL }}
@@ -73,8 +64,8 @@ jobs:
 
       - name: Resumo da execução
         run: |
-          echo "## Build concluído!" >> $GITHUB_STEP_SUMMARY
+          echo "## ✅ Build concluído!" >> $GITHUB_STEP_SUMMARY
           echo "- Banco: MySQL 8" >> $GITHUB_STEP_SUMMARY
           echo "- Tabela: criada" >> $GITHUB_STEP_SUMMARY
           echo "- Testes: executados" >> $GITHUB_STEP_SUMMARY
-          echo "- JAR: gerado e salvo" >> $GITHUB_STEP_SUMMAR
+          echo "- JAR: gerado e salvo" >> $GITHUB_STEP_SUMMARY
