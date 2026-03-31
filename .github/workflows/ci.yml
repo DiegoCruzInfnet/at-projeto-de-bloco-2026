@@ -34,6 +34,14 @@ jobs:
           distribution: temurin
           java-version: 21
 
+      - name: Cache do Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
       - name: Criar db.properties
         env:
           DB_URL: ${{ secrets.DB_URL }}
@@ -52,6 +60,12 @@ jobs:
 
       - name: Rodar testes
         run: mvn test
+
+      - name: Salvar relatório JaCoCo
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-cobertura
+          path: target/site/jacoco/
 
       - name: Build
         run: mvn clean package -DskipTests
