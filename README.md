@@ -186,14 +186,21 @@ mvn clean test jacoco:report
 
 ## 📊 Cobertura de Testes
 ```
-O projeto utiliza JaCoCo para análise de cobertura de testes.
+![Coverage Instructions](https://img.shields.io/badge/instructions-88%25-brightgreen)
+![Coverage Branches](https://img.shields.io/badge/branches-91%25-brightgreen)
 
-Resultados obtidos:
+Relatório gerado automaticamente pelo JaCoCo no pipeline de CI/CD.
+| Pacote | Cobertura de Instruções | Cobertura de Branches |
+|--------|------------------------|-----------------------|
+| br.com.lojaJava.dao | 86% | 80% |
+| br.com.lojaJava.connection | 58% | 50% |
+| br.com.lojaJava | 37% | n/a |
+| br.com.lojaJava.validacoes | 100% | 100% |
+| br.com.lojaJava.controller | 100% | 100% |
+| br.com.lojaJava.model | 100% | n/a |
+| br.com.lojaJava.exception | 100% | n/a |
+| **Total** | **88%** | **91%** |
 
-- Cobertura de instruções: 88%
-- Cobertura de branches: 91%
-
-Isso garante que a maior parte da lógica de negócio esteja validada por testes automatizados.
 ```
 ---
 
