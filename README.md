@@ -1,3 +1,6 @@
+### Badge de status
+
+![CI Java Maven](https://github.com/DiegoCruzInfnet/TP5_Projeto_de_Bloco/actions/workflows/ci.yml/badge.svg)
 # 🏬 Loja Java
 
 Projeto em Java desenvolvido para gerenciar produtos de uma loja, com persistência em banco de dados MySQL, validações automáticas e testes unitários.  
@@ -192,3 +195,28 @@ Resultados obtidos:
 
 Isso garante que a maior parte da lógica de negócio esteja validada por testes automatizados.
 ```
+---
+
+## 🚀 CI/CD com GitHub Actions -- ADIÇÃO TP5
+
+Este projeto utiliza GitHub Actions para integração contínua automatizada.
+
+### Pipeline (`ci.yml`)
+
+A cada `push` ou `pull_request` na branch `master`, o pipeline executa automaticamente:
+
+1. **Sobe um banco MySQL 8** no ambiente de CI
+2. **Cria o `db.properties`** usando secrets do repositório
+3. **Cria a tabela `produtos`** via `schema.sql`
+4. **Roda todos os testes** incluindo testes de banco e Selenium
+5. **Gera o build** da aplicação
+6. **Salva o JAR** como artefato para download
+
+### Secrets necessários
+
+| Secret | Descrição |
+|--------|-----------|
+| `DB_URL` | URL de conexão com o banco |
+| `DB_USER` | Usuário do banco |
+| `DB_PASSWORD` | Senha do banco |
+
