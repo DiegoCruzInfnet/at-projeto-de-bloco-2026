@@ -185,11 +185,12 @@ mvn clean test jacoco:report
 ```
 
 ## 📊 Cobertura de Testes
-```
+
 ![Coverage Instructions](https://img.shields.io/badge/instructions-88%25-brightgreen)
 ![Coverage Branches](https://img.shields.io/badge/branches-91%25-brightgreen)
 
 Relatório gerado automaticamente pelo JaCoCo no pipeline de CI/CD.
+
 | Pacote | Cobertura de Instruções | Cobertura de Branches |
 |--------|------------------------|-----------------------|
 | br.com.lojaJava.dao | 86% | 80% |
@@ -201,7 +202,7 @@ Relatório gerado automaticamente pelo JaCoCo no pipeline de CI/CD.
 | br.com.lojaJava.exception | 100% | n/a |
 | **Total** | **88%** | **91%** |
 
-```
+
 ---
 
 ## 🚀 CI/CD com GitHub Actions -- ADIÇÃO TP5
